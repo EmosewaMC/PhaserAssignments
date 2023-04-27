@@ -3,7 +3,7 @@ class D1GameScene1 extends Phaser.Scene {
 		super('D1GameScene1');
 	}
 	preload() {
-		this.load.image('banana', 'https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTYSv-kmEqeAj6NRr09yPqvo3HGVdDsuw9ZGKRfpl9EtI6zttIJyRv7WSCMK_4eAsrm');
+		this.load.image('studio', './assets/my_very_good_studio.png');
 	}
 	create() {
 		this.input.once('pointerdown', function () {
@@ -13,7 +13,7 @@ class D1GameScene1 extends Phaser.Scene {
 			this.scene.start('D1GameScene2');
 
 		}, this);
-		this.add.sprite(400, 300, 'banana').setScale(0.5);
+		this.add.sprite(400, 300, 'studio').setScale(0.5);
 	}
 	update() {
 		// console.log('in Scene 1');
