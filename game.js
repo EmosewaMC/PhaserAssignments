@@ -13,7 +13,7 @@ class D1GameScene1 extends Phaser.Scene {
 			this.scene.start('D1GameScene2');
 
 		}, this);
-		this.add.sprite(400, 300, 'studio').setScale(0.5);
+		this.add.sprite(400, 300, 'studio');
 	}
 	update() {
 		// console.log('in Scene 1');
