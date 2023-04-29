@@ -39,10 +39,16 @@ class StudioLogoIntro extends Phaser.Scene {
 	}
 	create() {
 		this.input.once('pointerdown', function () {
+			this.sound.stopAll();
 			nextScene(this, 'D1GameScene2');
 		}, this);
 		this.studioSprite = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'studio').setAlpha(0);
-		this.sound.play('intro');
+		this.sound.play(
+			'intro',
+			{
+				volume: 0.25
+			}
+		);
 		this.tweens.add({
 			targets: this.studioSprite,
 			duration: 1000,
@@ -134,14 +140,12 @@ class D1GameScene3 extends Phaser.Scene {
 	}
 	preload() {
 		this.load.image('blueberry', './assets/goldfish.png');
+		this.load.image('menuText', './assets/menu_text.png')
 		this.load.audio('menu', './assets/Timesplitters_2_Music_streets.mp3');
 	}
 	create() {
 		this.add.sprite(500, 350, 'blueberry').setScale(0.25);
-		renderText(this, 'Play', 25, 25); // These need to be images instead which i create in krita with TS font.
-		renderText(this, 'Options', 25, 100); // These need to be images instead which i create in krita with TS font.
-		renderText(this, 'Credits', 25, 175); // These need to be images instead which i create in krita with TS font.
-		renderText(this, 'Quit', 25, 250);
+		this.add.sprite(100, 200, 'menuText').setScale(0.5);
 		renderText(this, 'Extreme Fishing 3', 275, 25);
 		this.add.text(
 			275,
@@ -155,7 +159,12 @@ class D1GameScene3 extends Phaser.Scene {
 				strokeThickness: 4
 			}
 		);
-		this.sound.play('menu');
+		this.sound.play(
+			'menu',
+			{
+				volume: 0.25,
+			}
+		);
 		this.input.once('pointerdown', function () {
 			this.sound.stopAll();
 			nextScene(this, 'EndScene');
