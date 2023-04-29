@@ -1,22 +1,33 @@
-class D1GameScene1 extends Phaser.Scene {
+function nextScene(currentScene, nextScene) {
+	console.log('From ' + currentScene.scene.key + ' to ' + nextScene);
+	currentScene.scene.start(nextScene);
+}
+
+class StudioLogoIntro extends Phaser.Scene {
 	constructor() {
-		super('D1GameScene1');
+		super('StudioLogoIntro');
 	}
 	preload() {
-		this.load.image('studio', './assets/my_very_good_studio.png');
+		this.load.image('studio', './assets/StudioLogo.png');
 	}
 	create() {
 		this.input.once('pointerdown', function () {
-
-			console.log('From D1GameScene1 to D1GameScene2');
-
-			this.scene.start('D1GameScene2');
-
+			nextScene(this, 'D1GameScene2');
 		}, this);
-		this.add.sprite(400, 300, 'studio');
-	}
-	update() {
-		// console.log('in Scene 1');
+		this.studioSprite = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'studio').setAlpha(0);
+		this.tweens.add({
+			targets: this.studioSprite,
+			duration: 1000,
+			alpha: 1,
+			delay: 750,
+		});
+		this.tweens.add({
+			targets: this.studioSprite,
+			duration: 1000,
+			delay: 2750,
+			alpha: 0,
+			onComplete: function () { nextScene(this.parent.scene, 'D1GameScene2') },
+		});
 	}
 }
 
@@ -25,20 +36,52 @@ class D1GameScene2 extends Phaser.Scene {
 		super('D1GameScene2');
 	}
 	preload() {
-		this.load.image('strawberry', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Garden_strawberry_%28Fragaria_%C3%97_ananassa%29_single2.jpg/800px-Garden_strawberry_%28Fragaria_%C3%97_ananassa%29_single2.jpg');
+		this.load.image('ocean', './assets/EmptyOcean.jpeg');
 	}
 	create() {
-		this.add.sprite(400, 300, 'strawberry').setScale(0.5);
 		this.input.once('pointerdown', function () {
-
-			console.log('From D1GameScene2 to D1GameScene3');
-
-			this.scene.start('D1GameScene3');
-
+			nextScene(this, 'D1GameScene3');
 		}, this);
-	}
-	update() {
-		// console.log('in Scene 2');
+		this.oceanSprite = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'ocean').setScale(0.5).setAlpha(0);
+		this.tweens.add({
+			targets: this.oceanSprite,
+			duration: 1000,
+			alpha: 1
+		});
+		this.mast = this.add.rectangle(
+			415,
+			290,
+			10,
+			100,
+			'0xFFFFFF',
+			1
+		);
+		this.shipBase = this.add.rectangle(
+			415, // posx
+			350, // posy
+			100, // width
+			40, // height
+			'0xFFFFFF',
+			1
+		);
+
+		this.tweens.add({
+			targets: this.shipBase,
+			duration: 10000,
+			x: -100,
+			repeatDelay: 500
+		});
+		this.tweens.add({
+			targets: this.mast,
+			duration: 10000,
+			x: -100,
+			repeatDelay: 500,
+			onComplete: function () {
+				nextScene(this.parent.scene, 'D1GameScene3');
+			}
+		});
+		this.shipBase.setStrokeStyle(2, '0x000000', 1);
+		this.mast.setStrokeStyle(2, '0x000000', 1);
 	}
 }
 
@@ -50,17 +93,10 @@ class D1GameScene3 extends Phaser.Scene {
 		this.load.image('blueberry', 'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSLBRJfSJABUvT7tJeDy4RGOsuQb6Li-p-D-8zYZCyqtLRhgHtItinCALqqOp-sjx85b1nJqPyBx865SqU');
 	}
 	create() {
-		this.add.sprite(400, 300, 'blueberry').setScale(0.5);
+		this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, 'blueberry').setScale(0.5);
 		this.input.once('pointerdown', function () {
-
-			console.log('From D1GameScene3 to D1GameScene1');
-
-			this.scene.start('D1GameScene1');
-
+			nextScene(this, 'StudioLogoIntro');
 		}, this);
-	}
-	update() {
-		// console.log('in Scene 3');
 	}
 }
 
@@ -68,9 +104,9 @@ const config = {
 	type: Phaser.AUTO,
 	width: 800,
 	height: 600,
-	backgroundColor: '#000000',
-	parent: 'phaser-example',
-	scene: [D1GameScene1, D1GameScene2, D1GameScene3]
+	backgroundColor: '#FFFFFF',
+	parent: 'mainGame',
+	scene: [StudioLogoIntro, D1GameScene2, D1GameScene3]
 };
 
 const game = new Phaser.Game(config);
