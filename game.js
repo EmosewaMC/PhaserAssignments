@@ -141,7 +141,7 @@ class D1GameScene3 extends Phaser.Scene {
 	preload() {
 		this.load.image('blueberry', './assets/goldfish.png');
 		this.load.image('menuText', './assets/menu_text.png')
-		this.load.audio('menu', './assets/Timesplitters_2_Music_streets.mp3');
+		this.load.audio('menu', './assets/ts2_streets_cut.mp3');
 	}
 	create() {
 		this.add.sprite(500, 350, 'blueberry').setScale(0.25);
@@ -162,7 +162,7 @@ class D1GameScene3 extends Phaser.Scene {
 		this.sound.play(
 			'menu',
 			{
-				volume: 0.25,
+				volume: 0.5,
 			}
 		);
 		this.input.once('pointerdown', function () {
