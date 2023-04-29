@@ -150,7 +150,7 @@ class D1GameScene3 extends Phaser.Scene {
 		this.add.text(
 			275,
 			100,
-			'Press F to fish and when a \nfish is ready press G to pull up',
+			'Press F to fish and when a \nfish is ready press G to pull up.\nClick to proceed.',
 			{
 				font: '32px Arial',
 				fill: '#FFFFFF',
